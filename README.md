@@ -85,6 +85,8 @@ let user: User? = User.decode([
 
 ## Decoding JSON
 
+### Single Level Deep
+
 To use this library on a type, you will have to create a
 [curried](http://drewag.me/posts/practical-use-for-curried-functions-in-swift)
 factory method with each of the parameters you want to parse out of the JSON.
@@ -160,6 +162,25 @@ static func decode(dict: JSONDictionary) -> Name? {
         <*> JSONSpec(dict, "last", JSONString)
 }
 ```
+### Multiple Levels Deep
+
+If you have a nested custom type in your object, you can parse them by passing
+the result of decoding the type in place of a JSONSpec.
+
+```swift
+static func decode(dict: JSONDictionary) -> User? {
+    return User.create <^>
+        JSONSpec(dict, "id", JSONInt)
+        <*> (Name.decode <^> dict["name"])
+        <*> JSONSpec(dict, "email", JSONString, optional: true)
+}
+```
+
+Notice two things about this code. First, the nested decoding is placed in
+parameters to ensure that `Name.decode` is not used as a parameter to the
+previous `<*>` function. Second, I used a second `<^>` function to perform
+the decoding. This is because Name.decode is not optional, but it is possible
+for `dict["name"]` to return nil.
 
 ## Encoding JSON
 
