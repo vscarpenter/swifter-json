@@ -18,8 +18,8 @@ struct Name: JSONDecodable, JSONEncodable {
     }
 
     static func decode(dict: JSONDictionary) -> Name? {
-        return Name.create <^>
-            JSONSpec(dict, "first", JSONString)
+        return Name.create
+            <^> JSONSpec(dict, "first", JSONString)
             <*> JSONSpec(dict, "last", JSONString)
     }
 
@@ -41,8 +41,8 @@ struct User: JSONDecodable, JSONEncodable {
     }
 
     static func decode(dict: JSONDictionary) -> User? {
-        return User.create <^>
-            JSONSpec(dict, "id", JSONInt)
+        return User.create
+            <^> JSONSpec(dict, "id", JSONInt)
             <*> (Name.decode <^> dict["name"])
             <*> JSONSpec(dict, "email", JSONString, optional: true)
     }

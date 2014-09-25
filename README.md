@@ -23,8 +23,8 @@ struct Name: JSONDecodable, JSONEncodable {
     }
 
     static func decode(dict: JSONDictionary) -> Name? {
-        return Name.create <^>
-            JSONSpec(dict, "first", JSONString)
+        return Name.create
+            <^> JSONSpec(dict, "first", JSONString)
             <*> JSONSpec(dict, "last", JSONString)
     }
 
@@ -50,8 +50,8 @@ struct User: JSONDecodable, JSONEncodable {
     }
 
     static func decode(dict: JSONDictionary) -> User? {
-        return User.create <^>
-            JSONSpec(dict, "id", JSONInt)
+        return User.create
+            <^> JSONSpec(dict, "id", JSONInt)
             <*> (Name.decode <^> dict["name"])
             <*> JSONSpec(dict, "email", JSONString, optional: true)
     }
@@ -115,15 +115,15 @@ Then, using the 2 functions provided by this library, you can write a decoding
 like so:
 
 ```swift
-let user = Name.create <^>
-    JSONSpec(dict, "first", JSONString)
+let user = Name.create
+    <^> JSONSpec(dict, "first", JSONString)
     <*> JSONSpec(dict, "last", JSONString)
 ```
 Let's break down the order of operations here to give you a better understanding
 of how it works. Similar to how `4 + 5 + 6`, is done first by adding `4 + 5`,
 the first function call is:
 
-    Name.create <^> JSONSpec(dict, "first", JSONString
+    Name.create<^> JSONSpec(dict, "first", JSONString
 
 We have the function `<^>` that takes a parameter on each side of it. Name.create is
 already simplified because it is just a method. The other parameter just first be
@@ -157,8 +157,8 @@ that returns a newly decoded object from a dictionary:
 
 ```swift
 static func decode(dict: JSONDictionary) -> Name? {
-    return Name.create <^>
-        JSONSpec(dict, "first", JSONString)
+    return Name.create
+        <^> JSONSpec(dict, "first", JSONString)
         <*> JSONSpec(dict, "last", JSONString)
 }
 ```
@@ -169,8 +169,8 @@ the result of decoding the type in place of a JSONSpec.
 
 ```swift
 static func decode(dict: JSONDictionary) -> User? {
-    return User.create <^>
-        JSONSpec(dict, "id", JSONInt)
+    return User.create
+        <^> JSONSpec(dict, "id", JSONInt)
         <*> (Name.decode <^> dict["name"])
         <*> JSONSpec(dict, "email", JSONString, optional: true)
 }
