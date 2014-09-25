@@ -64,15 +64,15 @@ class JSONParserTests: XCTestCase {
         if let user = User.decode([
             "id": 10,
             "name": [
-                "first": "Andrew",
-                "last": "Wagner",
+                "first": "Sarah",
+                "last": "Doe",
             ],
-            "email": "andrew@drewag.me",
+            "email": "sarah@example.com",
         ]) {
             XCTAssertEqual(user.id, 10)
-            XCTAssertEqual(user.name.first, "Andrew")
-            XCTAssertEqual(user.name.last, "Wagner")
-            XCTAssertEqual(user.email!, "andrew@drewag.me")
+            XCTAssertEqual(user.name.first, "Sarah")
+            XCTAssertEqual(user.name.last, "Doe")
+            XCTAssertEqual(user.email!, "sarah@example.com")
         }
         else {
             XCTAssert(false)
@@ -83,14 +83,14 @@ class JSONParserTests: XCTestCase {
         if let user = User.decode([
             "id": 10,
             "name": [
-                "first": "Andrew",
-                "last": "Wagner",
+                "first": "Sarah",
+                "last": "Doe",
             ],
             "email": NSNull(),
         ]) {
             XCTAssertEqual(user.id, 10)
-            XCTAssertEqual(user.name.first, "Andrew")
-            XCTAssertEqual(user.name.last, "Wagner")
+            XCTAssertEqual(user.name.first, "Sarah")
+            XCTAssertEqual(user.name.last, "Doe")
             XCTAssertNil(user.email)
         }
         else {
@@ -109,27 +109,27 @@ class JSONParserTests: XCTestCase {
     }
 
     func testEncode() {
-        let user = User(id: 10, name: Name(first: "Andrew", last: "Wagner"), email: "andrew@drewag.me")
+        let user = User(id: 10, name: Name(first: "Sarah", last: "Doe"), email: "sarah@example.com")
         let userDict: JSONDictionary = user.encode()
 
         XCTAssertEqual(userDict["id"]! as Int, 10)
 
         let nameDict = userDict["name"]! as JSONDictionary
-        XCTAssertEqual(nameDict["first"]! as String, "Andrew")
-        XCTAssertEqual(nameDict["last"]! as String, "Wagner")
+        XCTAssertEqual(nameDict["first"]! as String, "Sarah")
+        XCTAssertEqual(nameDict["last"]! as String, "Doe")
 
-        XCTAssertEqual(userDict["email"]! as String, "andrew@drewag.me")
+        XCTAssertEqual(userDict["email"]! as String, "sarah@example.com")
     }
 
     func testEncodeWithNone() {
-        let user = User(id: 10, name: Name(first: "Andrew", last: "Wagner"), email: nil)
+        let user = User(id: 10, name: Name(first: "Sarah", last: "Doe"), email: nil)
         let userDict: JSON = user.encode()
 
         XCTAssertEqual(userDict["id"] as Int, 10)
 
         let nameDict = userDict["name"]! as JSONDictionary
-        XCTAssertEqual(nameDict["first"]! as String, "Andrew")
-        XCTAssertEqual(nameDict["last"]! as String, "Wagner")
+        XCTAssertEqual(nameDict["first"]! as String, "Sarah")
+        XCTAssertEqual(nameDict["last"]! as String, "Doe")
 
         XCTAssertEqual(userDict["email"] as NSObject, NSNull())
     }

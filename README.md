@@ -3,7 +3,7 @@ swifter-json
 
 Swift library for parsing JSON
 
-Example:
+# Make Type JSON decondable and encodable
 
 ```swift
 struct Name: JSONDecodable, JSONEncodable {
@@ -27,7 +27,11 @@ struct Name: JSONDecodable, JSONEncodable {
         ]
     }
 }
+```
 
+# Use Nested Class
+
+```swift
 struct User: JSONDecodable, JSONEncodable {
     let id: Int
     let name: Name
@@ -55,6 +59,19 @@ struct User: JSONDecodable, JSONEncodable {
         ]
     }
 }
+```
+
+# Perform decoding
+
+```swift
+let user: User? = User.decode([
+    "id": 10,
+    "name": [
+        "first": "Sarah",
+        "last": "Doe",
+    ],
+    "email": "sarah@example.com",
+])
 ```
 
 Contribution
