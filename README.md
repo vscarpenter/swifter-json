@@ -5,13 +5,15 @@ Swift library for parsing JSON
 
 It is a type safe and succinct way to decode JSON
 
-# Example
+Example
+========
 
 First you can just look at a quick example of how SwifterJSON is intended
 to be used. There is more in-depth information below the example on how to
 use it and how it works.
 
-## Make Type JSON decondable and encodable
+Make Type JSON decondable and encodable
+---------------------------------------
 
 ```swift
 struct Name: JSONDecodable, JSONEncodable {
@@ -37,7 +39,8 @@ struct Name: JSONDecodable, JSONEncodable {
 }
 ```
 
-## Use Nested Class
+Use Nested Class
+-----------------
 
 ```swift
 struct User: JSONDecodable, JSONEncodable {
@@ -69,7 +72,8 @@ struct User: JSONDecodable, JSONEncodable {
 }
 ```
 
-## Perform decoding
+Perform decoding
+----------------
 
 ```swift
 let user: User? = User.decode([
@@ -81,9 +85,11 @@ let user: User? = User.decode([
     "email": "sarah@example.com",
 ])
 ```
-# How To
+How To
+======
 
-## Decoding JSON
+Decoding JSON
+--------------
 
 ### Single Level Deep
 
@@ -182,7 +188,8 @@ previous `<*>` function. Second, I used a second `<^>` function to perform
 the decoding. This is because Name.decode is not optional, but it is possible
 for `dict["name"]` to return nil.
 
-## Encoding JSON
+Encoding JSON
+-------------
 
 Encoding JSON is much more straight forward. There is a JSONEncodable protocol the defines a
 method "encode" that returns a JSON dictionary. For example:
@@ -217,3 +224,9 @@ Contribution
 =============
 
 I encourage anybody with ideas or bug fixes to make changes and submit pull requests. If you do, please follow the [CAAG Commit Style](http://drewag.me/posts/changes-at-a-glance?source=github).
+
+Wish List
+----------
+- I would love for this library to propagate an error
+up the chain so that the parsing failure could be
+accessed programatically instead of just in the log.
